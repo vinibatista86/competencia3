@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Competência III</title>
+    <style>
+        .hidden { display: none; }
+        .question {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #resultado {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            display: none;
+        }
+        #comentario {
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="inicio" class="question">
+        <p>O texto fala do tema em todos os parágrafos?</p>
+        <button class="button" onclick="responder('inicio', 'sim', 'contradicao')">SIM</button>
+        <button class="button" onclick="mostrarResultado(40, 'Seu texto não mantém o tema em todos os parágrafos.')">NÃO</button>
+    </div>
+
+    <div id="contradicao" class="question hidden">
+        <p>Há alguma contradição grave no texto, que invalida o ponto de vista do estudante?</p>
+        <button class="button" onclick="mostrarResultado(80, 'Seu texto apresenta contradições que comprometem sua argumentação.')">SIM</button>
+        <button class="button" onclick="responder('contradicao', 'nao', 'progressao')">NÃO</button>
+    </div>
+
+    <div id="progressao" class="question hidden">
+        <p>O texto se configura sem qualquer progressão, parecendo mais uma enumeração de informações?</p>
+        <button class="button" onclick="mostrarResultado(80, 'Seu texto não apresenta progressão adequada das ideias.')">SIM</button>
+        <button class="button" onclick="responder('progressao', 'nao', 'progressao_minima')">NÃO</button>
+    </div>
+
+    <div id="progressao_minima" class="question hidden">
+        <p>O texto possui apenas uma progressão mínima, com poucas marcas de explicações?</p>
+        <button class="button" onclick="mostrarResultado(120, 'Seu texto apresenta progressão limitada das ideias.')">SIM</button>
+        <button class="button" onclick="responder('progressao_minima', 'nao', 'lacunas')">NÃO</button>
+    </div>
+
+    <div id="lacunas" class="question hidden">
+        <p>O texto é bem estruturado, mas possui muitas lacunas?</p>
+        <button class="button" onclick="mostrarResultado(120, 'Seu texto apresenta lacunas que prejudicam a compreensão.')">SIM</button>
+        <button class="button" onclick="responder('lacunas', 'nao', 'posicionamento')">NÃO</button>
+    </div>
+
+    <div id="posicionamento" class="question hidden">
+        <p>O texto possui marcas de posicionamento crítico?</p>
+        <button class="button" onclick="responder('posicionamento', 'sim', 'falhas_pontuais')">SIM</button>
+        <button class="button" onclick="mostrarResultado(120, 'Seu texto não apresenta posicionamento crítico claro.')">NÃO</button>
+    </div>
+
+    <div id="falhas_pontuais" class="question hidden">
+        <p>O texto possui mais de uma lacuna ou falhas pontuais de projeto?</p>
+        <button class="button" onclick="mostrarResultado(160, 'Seu texto apresenta algumas falhas pontuais.')">SIM</button>
+        <button class="button" onclick="responder('falhas_pontuais', 'nao', 'intervencao')">NÃO</button>
+    </div>
+
+    <div id="intervencao" class="question hidden">
+        <p>A proposta de intervenção contempla os dois argumentos trazidos pelo estudante?</p>
+        <button class="button" onclick="responder('intervencao', 'sim', 'projeto_claro')">SIM</button>
+        <button class="button" onclick="mostrarResultado(160, 'Sua proposta de intervenção não contempla todos os argumentos.')">NÃO</button>
+    </div>
+
+    <div id="projeto_claro" class="question hidden">
+        <p>O texto tem projeto claro e executado, com diversas marcas de desdobramentos explicativos?</p>
+        <button class="button" onclick="responder('projeto_claro', 'sim', 'autoria')">SIM</button>
+        <button class="button" onclick="mostrarResultado(160, 'Seu texto não apresenta um projeto claro e bem executado.')">NÃO</button>
+    </div>
+
+    <div id="autoria" class="question hidden">
+        <p>A organização e a defesa são estratégicas, configurando autoria?</p>
+        <button class="button" onclick="mostrarResultado(200, 'Excelente! Seu texto demonstra autoria e organização estratégica.')">SIM</button>
+        <button class="button" onclick="mostrarResultado(160, 'Seu texto ainda não demonstra plena autoria.')">NÃO</button>
+    </div>
+
+    <div id="resultado">
+        <p>Resultado: <span id="valor_resultado"></span></p>
+        <p id="comentario"></p>
+        <button class="button" onclick="reiniciar()">Recomeçar</button>
+    </div>
+
+    <script>
+        function responder(atual, resposta, proximo) {
+            document.getElementById(atual).classList.add('hidden');
+            document.getElementById(proximo).classList.remove('hidden');
+        }
+
+        function mostrarResultado(valor, comentario) {
+            document.querySelectorAll('.question').forEach(el => el.classList.add('hidden'));
+            document.getElementById('resultado').style.display = 'block';
+            document.getElementById('valor_resultado').textContent = valor;
+            document.getElementById('comentario').textContent = comentario;
+        }
+
+        function reiniciar() {
+            document.querySelectorAll('.question').forEach(el => el.classList.add('hidden'));
+            document.getElementById('resultado').style.display = 'none';
+            document.getElementById('inicio').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
